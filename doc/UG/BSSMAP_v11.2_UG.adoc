@@ -1,0 +1,115 @@
+---
+Author: Endre Kulcsár
+Version: 198 17-CNL 113 761, Rev. A
+Date: 2012-12-12
+
+---
+= BSSMAP (v11.2.0) Protocol Modules for TTCN-3 Toolset with TITAN, User Guide
+:author: Endre Kulcsár
+:revnumber: 198 17-CNL 113 761, Rev. A
+:revdate: 2012-12-12
+:toc:
+
+== About This Document
+
+=== How to Read This Document
+
+This is the User Guide for the BSSMAP protocol module. The BSSMAP protocol module is developed for the TTCN-3 Toolset with TITAN. This document should be read together with Function Specification <<_3, [3]>>.
+
+=== Presumed Knowledge
+
+To use this protocol module the knowledge of the TTCN-3 language <<_1, [1]>> is essential.
+
+The BSSMAP protocol is specified in the standard <<_4, [4]>>.
+
+== System Requirements
+
+Protocol modules are a set of TTCN-3 source code files that can be used as part of TTCN-3 test suites only. Hence, the BSSMAP protocol modules alone do not put specific requirements on the system used. However in order to compile and execute a TTCN-3 test suite using the set of BSSMAP protocol modules the following system requirements must be satisfied:
+
+* TITAN TTCN-3 Test Executor version R7A (1.7.pl0) or higher installed. For installation guide see <<_2, [2]>>.
+
+NOTE: This version of the protocol module is not compatible with TITAN releases earlier than R7A. Protocol modules described in the dependency list installed.
+
+= Protocol Modules
+
+== Overview
+
+The BSSMAP protocol modules implement the messages structure of the BSSMAP protocol in a formalized way, using the standard specification language TTCN-3. This allows defining of test data (templates) in the TTCN-3 language <<_1, [1]>> and correctly encoding/decoding messages when executing test suites using the Titan TTCN-3 test environment.
+
+The BSSMAP protocol modules are using Titan’s RAW encoding attributes <<_2, [2]>> and hence are usable with the Titan test toolset only.
+
+== Installation
+
+The set of protocol modules can be used in developing TTCN-3 test suites using any text editor. However to make the work more efficient a TTCN-3-enabled text editor is recommended (e.g. `nedit`, `xemacs`). Since the BSSMAP protocol is used as a part of a TTCN-3 test suite, this requires TTCN-3 Test Executor be installed before the module can be compiled and executed together with other parts of the test suite. For more details on the installation of TTCN-3 Test Executor see the relevant section of <<_2, [2]>>.
+
+== Configuration
+
+None.
+
+== Usage with BSSAP Modules
+
+The top-level PDU type of BSSMAP protocol module is the following:
+
+* `PDU_BSSAP`.
+
+This type can encapsulate information fields of either BSSMAP PDU or DTAP. This way the complete BSSAP PDU can be encoded with one encoder function and vice versa, the decoding can be done in one step. It is not necessary to encode separately the BSSMAP PDU.
+
+== Encoder and Decoder Functions
+
+The following encoder/decoder functions are available to treat BSSAP PDUs:
+
+[source]
+----
+external function enc_PDU_BSSAP(in PDU_BSSAP pdu) return octetstring
+with { extension "prototype(convert) encode(RAW)" };
+external function dec_PDU_BSSAP(in octetstring stream) return PDU_BSSAP
+with { extension "prototype(convert) decode(RAW)" };
+
+external function enc_PDU_BSSAP_fast(in PDU_BSSAP pdu, out octetstring stream)
+with { extension "prototype(fast) encode(RAW)" };
+
+external function dec_PDU_BSSAP_backtrack(in octetstring stream, out PDU_BSSAP pdu) return integer
+with { extension "prototype(backtrack) decode(RAW)" };
+----
+
+= Terminology
+
+No specific terminology is used.
+
+= Abbreviations
+
+3GPP:: 3rd Generation Partnership project
+
+BSSAP:: Base Station Subsystem Application Part
+
+BSSMAP:: Base Station Subsystem Management Application Part
+
+DTAP:: Direct Transfer Application Part
+
+ES:: ETSI Standard
+
+ETSI:: European Telecommunications Standards Institute
+
+PDU:: Protocol Data Unit
+
+TTCN-3:: Testing and Test Control Notation version 3
+
+= References
+
+[[_1]]
+[1] ETSI ES 201 873-1 v4.4.1 (2012-04) +
+The Testing and Test Control Notation version 3; Part 1: Core Language
+
+[[_2]]
+[2] TITAN User Guide
+
+[[_3]]
+[3] BSSMAP (v11.2.0) Protocol Modules for TTCN-3 Toolset with TITAN, Function Specification
+
+[[_4]]
+[4] 3GPP TS 48.008 V11.2.0 (2012-05) +
+3rd Generation Partnership Project; +
+Technical Specification Group GSM/EDGE Radio Access Network; +
+Mobile Switching Centre - Base Station System(MSC-BSS) interface; +
+Layer 3 specification(Release 11)
+
