@@ -1873,6 +1873,19 @@ type union BSSMAP_IE_ClassmarkInformationType
   BSSMAP_IE_ClassmarkInformationType2  classmarkInformationType2
 }
 
+///////////////////////////////////////////////////////
+// Osmocom extensions
+type record BSSMAP_IE_Osmo_OsmuxSupport
+{
+ OCT1                       elementIdentifier  //F0
+} with { variant "PRESENCE (elementIdentifier = 'F0'O)";}
+
+type record BSSMAP_IE_Osmo_OsmuxCID
+{
+ OCT1                       elementIdentifier,  //F1
+ INT1                       osmuxCID
+} with { variant "PRESENCE (elementIdentifier = 'F1'O)";}
+
 
 ///////////////////////////////////////////
 //   BSSMAP message definition
@@ -1903,7 +1916,8 @@ type record PDU_BSSMAP_AssignmentRequest
   BSSMAP_IE_GlobalCallReference         globalCallReference optional,
   BSSMAP_IE_LCLS_Configuration          lCLS_Configuration optional,
   BSSMAP_IE_LCLS_ConnectionStatusControl   lCLS_ConnectionStatusControl optional,
-  BSSMAP_IE_LCLS_CorrelationNotNeeded   lCLS_CorrelationNotNeeded optional
+  BSSMAP_IE_LCLS_CorrelationNotNeeded   lCLS_CorrelationNotNeeded optional,
+  BSSMAP_IE_Osmo_OsmuxCID               osmuxCID optional
 } with { variant "PRESENCE (messageType = '01'O)" }
 
 
@@ -1923,7 +1937,8 @@ type record PDU_BSSMAP_AssignmentComplete
   BSSMAP_IE_AoIP_TransportLayerAddress  aoIPTransportLayer optional,
   BSSMAP_IE_SpeechCodec                 speechCodec optional,
   BSSMAP_IE_SpeechCodecList             codecList optional,
-  BSSMAP_IE_LCLS_BSS_Status             lCLS_BSS_Status optional
+  BSSMAP_IE_LCLS_BSS_Status             lCLS_BSS_Status optional,
+  BSSMAP_IE_Osmo_OsmuxCID               osmuxCID optional
 } with { variant "PRESENCE (messageType = '02'O)" }
 
 // ASSIGNMENT FAILURE - 48.008 subclause 3.2.1.3
@@ -2192,7 +2207,8 @@ type record PDU_BSSMAP_Reset
 {
   OCT1					messageType, // H'30
   BSSMAP_IE_Cause			cause,
-  BSSMAP_IE_A_InterfaceSelectorForReset a_InterfaceSelectorForReset optional
+  BSSMAP_IE_A_InterfaceSelectorForReset a_InterfaceSelectorForReset optional,
+  BSSMAP_IE_Osmo_OsmuxSupport           osmuxSupport optional
 } with { variant "PRESENCE (messageType = '30'O)" }
 
 
@@ -2200,7 +2216,8 @@ type record PDU_BSSMAP_Reset
 type record PDU_BSSMAP_ResetAck
 {
   OCT1					messageType,   // H'31
-  BSSMAP_IE_A_InterfaceSelectorForReset a_InterfaceSelectorForReset optional
+  BSSMAP_IE_A_InterfaceSelectorForReset a_InterfaceSelectorForReset optional,
+  BSSMAP_IE_Osmo_OsmuxSupport           osmuxSupport optional
 } with { variant "PRESENCE (messageType = '31'O)" }
 
 
