@@ -1863,7 +1863,19 @@ type record BSSMAP_IE_CSFB_Indication
  OCT1                       elementIdentifier  //8F
 } with { variant "PRESENCE (elementIdentifier = '8F'O)";}
 
+//3.2.2.126 Selected PLMN ID
+type record BSSAMAP_IE_SelectedPLMNId
+{
+  OCT1                       elementIdentifier, //'94'O
+  OCT3                       mcc_mnc,
+} with { variant "PRESENCE (elementIdentifier = '94'O)" }
 
+//3.2.2.127 Last used E-UTRAN PLMN ID
+type record BSSAMAP_IE_LastUsedEUTRANPLMNId
+{
+  OCT1                       elementIdentifier, //'95'O
+  OCT3                       mcc_mnc,
+} with { variant "PRESENCE (elementIdentifier = '95'O)" }
 
 ///////////////////////////////////////////////////////
 // Used in HANDOVER REQUEST message
@@ -2639,7 +2651,9 @@ type record PDU_BSSMAP_CommonID
 {
   OCT1					messageType, // H'2F
   BSSMAP_IE_IMSI			iMSI,
-  BSSMAP_IE_SNAAccessInfo		sNAAccessInformation optional
+  BSSMAP_IE_SNAAccessInfo		sNAAccessInformation optional,
+  BSSAMAP_IE_SelectedPLMNId		selectedPLMNId optional,
+  BSSAMAP_IE_LastUsedEUTRANPLMNId	lastUsedEUTRANPLMNId optional
 } with { variant "PRESENCE (messageType = '2F'O)" }
 
 
